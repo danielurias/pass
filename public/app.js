@@ -67,9 +67,23 @@ function createUserOnServer(user) {
   var userData = "email=" + encodeURIComponent(user.email);
   userData += "&firstName=" + encodeURIComponent(user.firstName);
   userData += "&lastName=" + encodeURIComponent(user.lastName);
-  userData += "&encryptedPassword=" + encodeURIComponent(user.encryptedPassword);
+  userData += "&plainPassword=" + encodeURIComponent(user.plainPassword);
 
   return fetch("http://localhost:8080/users", {
+    method: "POST",
+    body: userData,
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    }
+  });
+}
+
+function loginUserOnServer(user) {
+  var userData = "email=" + encodeURIComponent(user.email);
+  userData += "&plainPassword=" + encodeURIComponent(user.pass);
+
+  return fetch("http://localhost:8080/session", {
     method: "POST",
     body: userData,
     credentials: "include",
@@ -126,6 +140,8 @@ var app = new Vue({
     userfName: '',
     userlName: '',
     userPassword: '',
+    user: '',
+    pass: '',
     totalCalories: '',
     intakeCategory: '',
     intakeFood: '',
@@ -160,7 +176,7 @@ var app = new Vue({
         email: this.userEmail,
         firstName: this.userfName,
         lastName: this.userlName,
-        encryptedPassword: this.userPassword
+        plainPassword: this.userPassword
       }).then((response) => {
         if (response.status == 201) {
         } else {
@@ -171,6 +187,20 @@ var app = new Vue({
       this.userfName = "";
       this.userlName = "";
       this.userPassword = "";
+    },
+    loginUser: function() {
+      loginUserOnServer({
+        email: this.user,
+        pass: this.pass
+      }).then((response) => {
+        if (response.status == 201) {
+          this.loadIntakes();
+        } else {
+          alert(`Status: ${response.status}`);
+        }
+      });
+      this.user = "";
+      this.pass = "";
     },
     submitNewIntake: function () {
       if (!this.validateIntake()) {

@@ -4,22 +4,22 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
+    <div id="app">
     <div id="userView" class="animation-area">
       <label>Welcome! Login or Create New Account</label>
       <div id='register'>
-          <input type='text' id='first-name' placeholder="First Name">         
-          <input type='text' id='last-name' placeholder="Last Name">             
-          <input type='text' id='email' placeholder="Email">               
-          <input type='text' id='password' placeholder="Password">
+          <input type='text' id='first-name' v-model="userfName" placeholder="First Name">         
+          <input type='text' id='last-name' v-model="userlName" placeholder="Last Name">             
+          <input type='text' id='email' v-model="userEmail" placeholder="Email">               
+          <input type='text' id='password' v-model="userPassword" placeholder="Password">
           <button v-on:click="createUser">Register</button>
       </div>
       <div id='register'>             
-          <input type='text' id='username' placeholder="Username">             
-          <input type='password' id='passw' placeholder="Password">
-          <div id='login-button'>Login</div>
+          <input type='text' id='username' v-model="user" placeholder="Username">             
+          <input type='password' id='passw' v-model="pass" placeholder="Password">
+          <button v-on:click="loginUser">Login</button>
       </div>
     </div>
-    <div id="app">
       <h1>Track Your Calories</h1>
         <div id="intro">
           <p id="pp">Categories to choose from:</p><br>

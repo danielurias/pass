@@ -61,7 +61,6 @@ userSchema.methods.verifyPassword = function (plainPassword, callback) {
   });
 };
 
-
 const User = mongoose.model('User', userSchema);
 
 module.exports = {
