@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div id="userView" class="animation-area">
+      <label>Welcome! Login or Create New Account</label>
+      <div id='register'>
+          <input type='text' id='first-name' placeholder="First Name">         
+          <input type='text' id='last-name' placeholder="Last Name">             
+          <input type='text' id='email' placeholder="Email">               
+          <input type='text' id='password' placeholder="Password">
+          <button v-on:click="createUser">Register</button>
+      </div>
+      <div id='register'>             
+          <input type='text' id='username' placeholder="Username">             
+          <input type='password' id='passw' placeholder="Password">
+          <div id='login-button'>Login</div>
+      </div>
+    </div>
+    <div id="app">
+      <h1>Track Your Calories</h1>
+        <div id="intro">
+          <p id="pp">Categories to choose from:</p><br>
+          <ol>
+            <li id="p">dairy</li>
+            <li id="p">protein</li>
+            <li id="p">vegetables</li>
+            <li id="p">fruits</li>
+            <li id="p">grains</li>
+          </ol>
+        </div>
+
+        <div v-if="errorMessages.length > 0">
+          <ol>
+            <div id="error">
+              <p id="p2">There was a problem saving your entry</p>
+              <li v-bind:style="activeColor" v-for="error in errorMessages">
+                {{ error }}
+              </li>
+            </div>
+          </ol>
+        </div>
+        
+        <div id="top">
+          <p id="p2">Category</p>
+          <input type="text" v-model="intakeCategory"><br>
+          <p id="p2">Food</p>
+          <input type="text" v-model="intakeFood"><br>
+          <p id="p2">Serving</p>
+          <input type="text" v-model="intakeServing"><br>
+          <p id="p2">Calories</p>
+          <input type="text" v-model="intakeCalories"><br>
+          <div id="b1">
+            <button v-on:click="submitNewIntake">Submit</button>
+          </div>
+          <div id="b2">
+            <button v-on:click="updateIntake">Update</button>
+          </div>
+        </div>
+        <div id="total">
+          <h3>Total Calories</h3>
+          <p>{{ totalCalories }}</p>
+        </div>
+          <ol class="intake-list">
+            <li v-for="intake in intakes">
+                <div v-bind:class="{ 'blue': intake.category == 'dairy', 
+                'orange': intake.category == 'protein',
+                'green': intake.category == 'vegetables',
+                'purple': intake.category == 'fruits',
+                'brown': intake.category == 'grains'}" class="solo">
+                  <strong>Category:</strong> {{ intake.category }}
+                  <strong>Food:</strong> {{ intake.food }}
+                  <strong>Serving:</strong> {{ intake.serving }}
+                  <strong>Calories:</strong> {{ intake.calories }}
+                  <div id="b3">
+                    <button v-on:click="editIntake(intake)">Edit</button>
+                  </div>
+                  <div id="b3">
+                    <button @click="removeIntake(intake)">Delete</button>
+                  </div>
+                </div>
+            </li>
+          </ol>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
